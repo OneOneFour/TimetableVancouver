@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <h1>The next bus is...</h1>
-    <bus-stop-selector v-bind:stops="stops" :api_key="api_key"></bus-stop-selector>
-    <footer>Last updated at</footer>
+    <template v-if="stops.length > 0">
+        <h1>The next bus is...</h1>
+        <bus-stop-selector v-bind:stops="stops" :api_key="api_key"></bus-stop-selector>
+        <footer>Last updated at {{getTime}}</footer>
+    </template>
+    <template v-else>   
+        <h2>Loading...</h2>
+    </template>
+
   </div>
 </template>
 
@@ -17,11 +23,21 @@ export default {
     },
     data(){return {
         stops:[],
-        api_key:api_key
+        api_key:api_key,
+        message:""
     }},
+    computed:{
+        getTime(){
+            let now = new Date();
+            return now.getHours() + ":" +(now.getMinutes() > 9?"":"0")+ now.getMinutes();
+        }
+        
+    },
     mounted:function(){
+        
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition((position)=>{
+            
                 // TransLink API can't handle long coords
                 this.latitude = position.coords.latitude.toFixed(6);
                 this.longitude = position.coords.longitude.toFixed(6);
@@ -34,7 +50,6 @@ export default {
                 .then(data=>{
                     this.stops = data.filter(stop => stop.Routes.length > 0);
                 });
-                
             })
         }
     }

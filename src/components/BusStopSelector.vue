@@ -36,6 +36,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin: 50px 0;
+    height:50vh;
 }
 .hide{
     display:none;
