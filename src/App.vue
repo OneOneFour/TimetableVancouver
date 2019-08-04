@@ -1,22 +1,52 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>The next bus is...</h1>
+    <bus-stop-selector v-bind:stops="stops" :api_key="api_key"></bus-stop-selector>
+    <footer>Last updated at</footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BusStopSelector from "./components/BusStopSelector"
 
+const api_key = "o52MYm2YA0zvFBN3LU9D";
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+    name: 'app',
+    components: {
+        "bus-stop-selector":BusStopSelector
+    },
+    data(){return {
+        stops:[],
+        api_key:api_key
+    }},
+    mounted:function(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((position)=>{
+                // TransLink API can't handle long coords
+                this.latitude = position.coords.latitude.toFixed(6);
+                this.longitude = position.coords.longitude.toFixed(6);
+
+                let queryURL = `https://api.translink.ca/rttiapi/v1/stops?apikey=${api_key}&lat=${this.latitude}&long=${this.longitude}`;
+                fetch(queryURL,{headers:new Headers({"accept":"application/JSON"})})
+                .then(response=>{
+                    return response.json();
+                })
+                .then(data=>{
+                    this.stops = data.filter(stop => stop.Routes.length > 0);
+                });
+                
+            })
+        }
+    }
 }
 </script>
 
 <style>
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
