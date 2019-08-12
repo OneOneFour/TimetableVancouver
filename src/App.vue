@@ -2,7 +2,7 @@
   <div id="app">
     <template v-if="stops.length > 0">
         <h1>The next bus is...</h1>
-        <bus-stop-selector v-bind:stops="stops" :api_key="api_key"></bus-stop-selector>
+        <bus-stop-selector v-bind:stops="stops" :api_key="api_key" ></bus-stop-selector>
         <footer>Last updated at {{updatedTime}}</footer>
     </template>
     <template v-else>   
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web&display=swap');
 
 *{
     box-sizing: border-box;
@@ -76,7 +76,7 @@ export default {
     padding:0;
 }
 body {
-  font-family:'Lexend Deca', Helvetica, Arial, sans-serif;
+  font-family:'Titillium Web', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -5,23 +5,14 @@
             <h3 v-for="(bus,i) in nextBuses" :key="i" >{{bus.RouteNo | stripzeros}} to {{bus.Schedules[0].Destination}} arriving {{bus.Schedules[0].ExpectedCountdown | asCountdown}} </h3>
         </div>
         
-        <!-- <template v-else>
+        <template v-else>
             <div class="busses">
-                <h3 style="text-align:center">Loading... </h3>
+                <h3 style="text-align:center">No buses 🙁</h3>
             </div>
-        </template> -->
+        </template>
     </div>
 </template> 
 <script>
-const a  = {
-                    RouteNo:"114",
-                    Destination:"FUCK YOU",
-                    Schedules:[
-                        {Destination:"Fuckland",ExpectedCountdown:13}
-
-                    ]
-                };
-let ticktock = null;
 export default {
     props:{
         stop:Object,
