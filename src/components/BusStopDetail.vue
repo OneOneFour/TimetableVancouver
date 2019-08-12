@@ -2,7 +2,7 @@
     <div class="bus-stop">
         <h2 class="stop-name">{{stop.OnStreet}} @ {{stop.AtStreet}}</h2>
         <div class="busses" v-if="nextBuses.length > 0">
-            <h3 v-for="(bus,i) in nextBuses" >{{bus.RouteNo | stripzeros}} to {{bus.Schedules[0].Destination}} arriving {{bus.Schedules[0].ExpectedCountdown | asCountdown}} </h3>
+            <h3 v-for="(bus,i) in nextBuses" :key="i" >{{bus.RouteNo | stripzeros}} to {{bus.Schedules[0].Destination}} arriving {{bus.Schedules[0].ExpectedCountdown | asCountdown}} </h3>
         </div>
         
         <!-- <template v-else>

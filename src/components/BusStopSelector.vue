@@ -51,15 +51,11 @@ export default {
     padding:10px;
     user-select: none;
 }
-.slide-enter{
 
-}
 .slide-enter-active{
     animation: slide-in-right 1s ease-in-out forwards;
 }
 
-.slide-leave{
-}
 .slide-leave-active{
     animation: slide-in-left 1s ease-in-out;
     animation-direction: reverse;
