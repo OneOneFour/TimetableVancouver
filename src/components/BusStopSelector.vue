@@ -1,7 +1,8 @@
 <template>
     <div class="bus-selector">
         <h4 class="navigator" @click="currentStop--" :class="{'hide-space':currentStop <= 0}"> &#8249;</h4>
-        <bus-stop-detail :stop="stop" :api_key="api_key" :class="getVisible(index)" v-for="(stop,index) in stops" :key="index"></bus-stop-detail>
+
+        <bus-stop-detail :stop="stop" :api_key="api_key"  v-for="(stop,index) in stops" v-show="currentStop==index" :key="index"></bus-stop-detail>
         <h4 class="navigator" @click="currentStop++" :class="{'hide-space':currentStop >= stops.length - 1}">&#8250;</h4>
     </div>
 </template>
@@ -30,24 +31,55 @@ export default {
 </script>
 <style>
 .bus-selector{
+    flex-wrap: nowrap;
     display:flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     justify-content: space-between;
     margin: 50px 0;
-    height:50vh;
-}
-.hide{
-    display:none;
+    width:auto;
+    height:65vh;
 }
 .hide-space{
     visibility: hidden;
 }
+
 .navigator{
     cursor: pointer;
     font-size:50pt;
     padding:10px;
     user-select: none;
 }
+.slide-enter{
+
+}
+.slide-enter-active{
+    animation: slide-in-right 1s ease-in-out forwards;
+}
+
+.slide-leave{
+}
+.slide-leave-active{
+    animation: slide-in-left 1s ease-in-out;
+    animation-direction: reverse;
+}
+@keyframes slide-in-left{
+    from{
+        transform:translateX(-100vw);
+    }
+    to{
+        transform:translateX(0);
+    }
+}
+
+@keyframes slide-in-right{
+    from{
+        transform:translateX(100vw);
+    }
+    to{
+        transform:translateX(0);
+    }
+}
+
 </style>
