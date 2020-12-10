@@ -2,8 +2,8 @@
     <div class="bus-selector">
         <h4 class="navigator" @click="currentStop--" :class="{'hide-space':currentStop <= 0}"> &#8249;</h4>
 
-        <bus-stop-detail :stop="stop" :api_key="api_key" :distance="this.stops[index].Distance" v-for="(stop,index) in stops" v-show="currentStop==index" :key="index"></bus-stop-detail>
-        <h4 class="navigator" @click="currentStop++" :class="{'hide-space':currentStop >= stops.length - 1}">&#8250;</h4>
+        <bus-stop-detail :stop="stop" :api_key="api_key" :distance="stops[index].Distance" v-for="(stop,index) in stops" v-show="currentStop==index" :key="index"></bus-stop-detail>
+        <h4 class="navigator" @click="currentStop++" :class="{'hide-space':currentStop >= stops.length - 1}">&#8250;</h4> 
     </div>
 </template>
 <script>
@@ -25,7 +25,7 @@ export default {
         }
     },
     components:{
-        'bus-stop-detail':BusStopDetail
+       BusStopDetail
     }
 }
 </script>
