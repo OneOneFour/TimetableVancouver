@@ -5,6 +5,11 @@
         <bus-stop-selector v-bind:stops="stops" :api_key="api_key" ></bus-stop-selector>
         <footer>Last updated at {{updatedTime}}</footer>
     </template>
+    <template v-else-if="error">
+        <h2>There has been an error</h2>
+        <p>{{error}}</p>
+        <p>(You are probably not located in the Vancouver area)</p>
+    </template>
     <template v-else>   
         <h2>Loading...</h2>
     </template>
@@ -28,6 +33,7 @@ export default {
     },
     data(){return {
         stops:[],
+        error:false,
         api_key:api_key,
         message:"",
         lastUpdated: null
@@ -49,11 +55,14 @@ export default {
                     let queryURL = `https://api.translink.ca/rttiapi/v1/stops?apikey=${api_key}&lat=${this.latitude}&long=${this.longitude}`;
                     fetch(queryURL,{headers:new Headers({"accept":"application/JSON"})})
                     .then(response=>{
+                        if(response.status == 404)  return Promise.reject("Sorry, no stops found with specified latitude, longitude, radius, and routes.")
                         return response.json();
                     })
+                    .catch(err => this.error = err )
                     .then(data=>{
                         this.stops = data.filter(stop => stop.Routes.length > 0);
-                    });
+                    })
+
                     this.lastUpdated = new Date();
                 })
             }
